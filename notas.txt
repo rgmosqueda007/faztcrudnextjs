@@ -1,0 +1,3 @@
+nos quedamos en el minuto 22 de https://youtu.be/Ac9J_yyQqOI
+
+esto para antes entender las dependencias entre los archivos y el uso de las funciones presentadas
