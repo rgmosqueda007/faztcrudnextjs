@@ -14,21 +14,7 @@ export const useTasks = () => {
 }
 
 export const TaskProvider = ({ children }) => {
-    const [tasks, setTasks] = useState([{
-        id: 1,
-        title: 'myfirst task',
-        description: 'some task'
-    },
-    {
-        id: 2,
-        title: 'second task',
-        description: '2 task'
-    },
-    {
-        id: 3,
-        title: 'thrid task',
-        description: '3 task'
-    },
+    const [tasks, setTasks] = useState([
     ])
 
 
@@ -37,7 +23,7 @@ export const TaskProvider = ({ children }) => {
       setTasks(  [...tasks, { title, description, id: uuid() }])
     }
 
-     const deleteTask = (id) => {
+     
 
         /* [...tasks]
         // copia todo lo que tenemos del arreglo de tareas*
@@ -47,17 +33,20 @@ export const TaskProvider = ({ children }) => {
         // copia todo lo que tenemos del arreglo de tareas con un flitrado de datos, que por cada terea que recorra buscar la propiedad id y es diferente al id dado entonces no lo añadas en el nuevo arreglo*/
 
         
-        
-setTasks(//con esta le dices establece esas tareas con set
-[...tasks.filter(task=>(task.id !== id))] // esta hace un recorrido de tareas pero sin la tarea que estamos buscando entonces ==> añade las tareas que no contengan el id dado
-)
-        }
+        //con esta le dices establece esas tareas con set
+const deleteTask = (id) => setTasks([...tasks.filter((task)=>task.id !== id)]); // esta hace un recorrido de tareas pero sin la tarea que estamos buscando entonces ==> añade las tareas que no contengan el id dado
+
+ const updateTask = (id, newData)=>       {
+    setTasks([...tasks.map(task=>task.id === id ?{...task,...newData} : task)])
+    
+ }
 
     return <TaskContext.Provider
         value={{ 
             tasks,
         createTask,
-        deleteTask
+        deleteTask,
+        updateTask
         }}>
         {children}
     </TaskContext.Provider>
