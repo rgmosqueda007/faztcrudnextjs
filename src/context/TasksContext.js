@@ -1,7 +1,8 @@
 "use client"
+import { useLocalStorage } from "@/app/hooks/useLocalstorage";
 //release1
-import { createContext, useContext, useState } from "react";
-import {v4 as uuid} from 'uuid'
+import { createContext, useContext } from "react";
+import { v4 as uuid } from 'uuid'
 
 export const TaskContext = createContext()
 
@@ -14,39 +15,39 @@ export const useTasks = () => {
 }
 
 export const TaskProvider = ({ children }) => {
-    const [tasks, setTasks] = useState([
-    ])
+
+    const [tasks, setTasks] = useLocalStorage('tasks', [])
 
 
 
     const createTask = (title, description) => {
-      setTasks(  [...tasks, { title, description, id: uuid() }])
+        setTasks([...tasks, { title, description, id: uuid() }])
     }
 
-     
 
-        /* [...tasks]
-        // copia todo lo que tenemos del arreglo de tareas*
-        //* [...tasks.filter]
-        // copia todo lo que tenemos del arreglo de tareas con un flitrado de datos*/
-        //* [...tasks.filter(task=>(task.id !== id))]
-        // copia todo lo que tenemos del arreglo de tareas con un flitrado de datos, que por cada terea que recorra buscar la propiedad id y es diferente al id dado entonces no lo añadas en el nuevo arreglo*/
 
-        
-        //con esta le dices establece esas tareas con set
-const deleteTask = (id) => setTasks([...tasks.filter((task)=>task.id !== id)]); // esta hace un recorrido de tareas pero sin la tarea que estamos buscando entonces ==> añade las tareas que no contengan el id dado
+    /* [...tasks]
+    // copia todo lo que tenemos del arreglo de tareas*
+    //* [...tasks.filter]
+    // copia todo lo que tenemos del arreglo de tareas con un flitrado de datos*/
+    //* [...tasks.filter(task=>(task.id !== id))]
+    // copia todo lo que tenemos del arreglo de tareas con un flitrado de datos, que por cada terea que recorra buscar la propiedad id y es diferente al id dado entonces no lo añadas en el nuevo arreglo*/
 
- const updateTask = (id, newData)=>       {
-    setTasks([...tasks.map(task=>task.id === id ?{...task,...newData} : task)])
-    
- }
+
+    //con esta le dices establece esas tareas con set
+    const deleteTask = (id) => setTasks([...tasks.filter((task) => task.id !== id)]); // esta hace un recorrido de tareas pero sin la tarea que estamos buscando entonces ==> añade las tareas que no contengan el id dado
+
+    const updateTask = (id, newData) => {
+        setTasks([...tasks.map(task => task.id === id ? { ...task, ...newData } : task)])
+
+    }
 
     return <TaskContext.Provider
-        value={{ 
+        value={{
             tasks,
-        createTask,
-        deleteTask,
-        updateTask
+            createTask,
+            deleteTask,
+            updateTask
         }}>
         {children}
     </TaskContext.Provider>
